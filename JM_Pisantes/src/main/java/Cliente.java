@@ -2,14 +2,15 @@ public class Cliente {
     private int idCliente;
     private String nome;
     private int cpf;
-    private String email, endereco;
+    private String email, endereco, senha;
 
-    public Cliente(int idCliente, String nome, int cpf, String email, String endereco) {
+    public Cliente(int idCliente, String nome, int cpf, String email, String endereco, String senha) {
         this.idCliente = idCliente;
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
         this.endereco = endereco;
+        this.senha = senha;
     }
 
     public int getIdCliente() {
@@ -52,5 +53,11 @@ public class Cliente {
         this.endereco = endereco;
     }
     
+    public String getSenha(){
+        return senha;
+    }
     
+    public void setSenha(String senha){
+        this.senha = senha;
+    }
 }
