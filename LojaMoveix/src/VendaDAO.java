@@ -1,5 +1,4 @@
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,16 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VendaDAO {
-
-    private String nome;
-
-    public VendaDAO(){
-        
-    }
-    
-    public VendaDAO(String nome) {
-        this.nome = nome;
-    }
     
     public void efetuarVenda(Venda v){
         ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
@@ -32,7 +21,7 @@ public class VendaDAO {
 
             stmt.executeUpdate();
             
-            stmt = conexao.prepareStatement("INSERT INTO ITEM_VENDA VALUES(?,?,?,?)");
+            stmt = conexao.prepareStatement("INSERT INTO Item_venda VALUES(?,?,?,?)");
             
             for(Item_venda item : v.getItens()) {
                 stmt.setInt(1, v.getNumVen());
