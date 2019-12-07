@@ -1,0 +1,65 @@
+CREATE TABLE Motorista(
+	CodMot int primary key,
+	CPF numeric(11),
+	CNH numeric(10),
+	nome varchar(50),
+	endereco varchar(100)
+);
+
+CREATE TABLE Veiculo(
+	Placa char(7) primary key,
+	Capacidade int
+);
+
+CREATE TABLE Vendedor(
+	CodVdd int primary key,
+	CPF numeric(11),
+	V_comissao numeric(4,2),
+	nome varchar(50),
+	endereco varchar(100)
+);
+
+CREATE TABLE Cliente(
+	CodCli int primary key,
+	Nome varchar(50),
+	Tel char(10),
+	Endereco varchar(100),
+	CPF numeric(11),
+	email varchar(50)
+);
+
+CREATE TABLE Venda(
+	NumVen int primary key,
+	Valor_Total numeric(11,2),
+	CodVdd int,
+	CodCli int,
+	CONSTRAINT FK_CODVDD FOREIGN KEY (CodVdd) REFERENCES Vendedor(CodVdd),
+	CONSTRAINT FK_CODCLI FOREIGN KEY (CodCli) REFERENCES Cliente(CodCli)
+);
+
+CREATE TABLE Produto(
+	CodPro int primary key,
+	Custo numeric(11,2),
+	Descricao text,
+	Preco  numeric(11,2),
+	Nome varchar(50)
+);
+
+CREATE TABLE Item_venda(
+	CodPro int,
+	NumVen int,
+	vUnitario numeric(11,2),
+	Qtd int
+);
+
+CREATE TABLE Entrega(
+	hora char(4),
+	dataE date,
+	NumVen int,
+	Placa char(7),
+	CodMot int,
+	CONSTRAINT FK_NUMVEN FOREIGN KEY (NumVen) REFERENCES Venda(NumVen),
+	CONSTRAINT FK_PLACA FOREIGN KEY (Placa) REFERENCES Veiculo(Placa),
+	CONSTRAINT FK_CODMOT FOREIGN KEY (CodMot) REFERENCES Motorista(CodMot),
+	CONSTRAINT PK_ENTREGA PRIMARY KEY (hora, dataE, NumVen, Placa, CodMot)
+);
