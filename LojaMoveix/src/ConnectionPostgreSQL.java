@@ -11,9 +11,9 @@ public class ConnectionPostgreSQL {
 	private String password;
 	
 	public ConnectionPostgreSQL(){
-		this.url = "jdbc:postgresql://localhost:5432/postgres";
+		this.url = "jdbc:postgresql://localhost:5432/aLojaMoveis";
 		this.user = "postgres";
-		this.password = "12345"; 
+		this.password = "12345";
 	}
 	
 	public Connection getConection() throws SQLException {
