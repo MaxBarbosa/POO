@@ -39,8 +39,32 @@ public class VendaDAO {
             postgres.close(null, stmt, conexao);
         }
     }
+
     
-    public void atualizarVenda(Venda v){
+     public Venda getVendaPeloNumero(int NumVen) {
+        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try {
+            conexao = postgres.getConection();
+            stmt = conexao.prepareStatement("SELECT * FROM Venda WHERE NumVen=?");
+            stmt.setInt(1, NumVen);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+               Venda ven = new Venda(rs.getInt("NumVen"),rs.getDouble("Valor_Total"), rs.getInt("CodVdd"), rs.getInt("CodCli"));
+                return ven;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            postgres.close(rs, stmt, conexao);
+        }
+        return null;
+    }
+    
+    
+   public void updateVenda(Venda v){
         ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
         PreparedStatement stmt = null;
         Connection conexao = null;
@@ -78,6 +102,7 @@ public class VendaDAO {
 
         ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
         ResultSet rs = null;
+        ResultSet rsi = null;
         PreparedStatement stmt = null;
         Connection conexao = null;
         try {
@@ -86,7 +111,14 @@ public class VendaDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                //Venda v = new Venda(rs.getInt("NumVen"),rs.getDouble("Valor_Total"), rs.getInt("CodVdd"), rs.getInt("CodCli"), rs.getList<>()("itens"));
+                Venda v = new Venda(rs.getInt("NumVen"),rs.getDouble("Valor_Total"), rs.getInt("CodVdd"), rs.getInt("CodCli"));
+                
+                stmt = conexao.prepareStatement("SELECT * FROM Item_venda WHERE NumVen=?");
+                rsi = stmt.executeQuery();
+                while (rsi.next()){
+                    
+                    v.getItens().add(new Item_venda(rsi.getInt("CodPro"), rsi.getInt("NumVen"),rsi.getDouble("vUnitario"), rsi.getInt("Qtd")));
+                }
             }
 
         } catch (SQLException e) {
@@ -97,4 +129,5 @@ public class VendaDAO {
 
         return listaRetorno;
     }
+    
 }

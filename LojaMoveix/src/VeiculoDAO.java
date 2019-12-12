@@ -23,24 +23,6 @@ public class VeiculoDAO {
             postgres.close(null, stmt, conexao);
         }
     }
-        
-            public void atualizarVeiculo(Veiculo v) {
-        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
-        PreparedStatement stmt = null;
-        Connection conexao = null;
-        try {
-            conexao = postgres.getConection();
-            stmt = conexao.prepareStatement("UPDATE Veiculo SET Placa=?, Placa=? WHERE Placa=?");
-            stmt.setString(1, v.getPlaca());
-            stmt.setInt(2, v.getCapacidade());
-
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            postgres.close(null, stmt, conexao);
-        }
-    }
     
     public void removerVeiculo(String Placa) {
         ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
@@ -82,5 +64,46 @@ public class VeiculoDAO {
         }
 
         return listaRetorno;
+    }
+    
+     public Veiculo getVeiculoPelaPlaca(String Placa) {
+        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try {
+            conexao = postgres.getConection();
+            stmt = conexao.prepareStatement("SELECT * FROM Veiculo WHERE Placa=?");
+            stmt.setString(1, Placa);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                Veiculo v = new Veiculo(rs.getString("Placa"), rs.getInt("Capacidade"));
+                return v;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            postgres.close(rs, stmt, conexao);
+        }
+        return null;
+    }
+    
+    
+    public void updateVeiculo(Veiculo vv) {
+        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try {
+            conexao = postgres.getConection();
+            stmt = conexao.prepareStatement("UPDATE Veiculo SET Placa=?, Capacidade=? WHERE Placa=?");
+            stmt.setString(1, vv.getPlaca());
+            stmt.setInt(2, vv.getCapacidade());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            postgres.close(null, stmt, conexao);
+        }
+    
     }
 }

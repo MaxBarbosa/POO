@@ -28,26 +28,6 @@ public class VendedorDAO {
         }
     }
     
-    public void atualizarVendedor(Vendedor v) {
-        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
-        PreparedStatement stmt = null;
-        Connection conexao = null;
-        try {
-            conexao = postgres.getConection();
-            stmt = conexao.prepareStatement("UPDATE Vendedor SET CodVdd=?, CPF=?, V_comissao=?, Nome=?, endereco=?");
-            stmt.setInt(1, v.getCodVdd());
-            stmt.setLong(2, v.getCPF());
-            stmt.setDouble(3, v.getV_comissao());
-            stmt.setString(4, v.getNome());
-            stmt.setString(5, v.getEndereco());
-
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            postgres.close(null, stmt, conexao);
-        }
-    }    
     public void removerVendedor(int CodVdd) {
         ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
         PreparedStatement stmt = null;
@@ -90,5 +70,46 @@ public class VendedorDAO {
         return listaRetorno;
     }
     
+     public Vendedor getVendedorPeloCodigo(int CodVdd) {
+        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try {
+            conexao = postgres.getConection();
+            stmt = conexao.prepareStatement("SELECT * FROM Vendedor WHERE CodVdd=?");
+            stmt.setInt(1, CodVdd);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                Vendedor vdd = new Vendedor(rs.getInt("CodVdd"), rs.getLong("CPF"), rs.getDouble("V_comissao"), rs.getString("nome"), rs.getString("Endereco"));
+                return vdd;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            postgres.close(rs, stmt, conexao);
+        }
+        return null;
+    }
     
-}
+    
+    public void updateVendedor(Vendedor vend) {
+        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try {
+            conexao = postgres.getConection();
+            stmt = conexao.prepareStatement("UPDATE Vendedor SET CPF=?, V_comissao=?, nome=?, Endereco=? WHERE CodVdd=?");
+            stmt.setInt(1, vend.getCodVdd());
+            stmt.setLong(2, vend.getCPF());
+            stmt.setDouble(3, vend.getV_comissao());
+            stmt.setString(4, vend.getNome());
+            stmt.setString(5, vend.getEndereco());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            postgres.close(null, stmt, conexao);
+        }
+    
+    }}

@@ -2,23 +2,24 @@ public class LojaMoveix {
     
     public static void main(String[] args) throws Exception {
         
-        Cliente c = new Cliente(1, "Jose", "40028922", "59340000", 1112223334, "ze@gmail.com");
-        //Entrega e = new Entrega("14:50", '2019-12-10', 1, "ABC-123", 1);
-        Motorista m = new Motorista(1, 199299399, 399299199, "Arnaldo", "59230000");
-        
-        ClienteDAO C = new ClienteDAO();
-        EntregaDAO E = new EntregaDAO();
-        Item_vendaDAO I = new Item_vendaDAO();
         MotoristaDAO M = new MotoristaDAO();
-        ProdutoDAO P = new ProdutoDAO();
-        VeiculoDAO V = new VeiculoDAO();
-        VendaDAO Ve = new VendaDAO();
+        VeiculoDAO Vei = new VeiculoDAO();
         VendedorDAO Ven = new VendedorDAO();
-       
         
-       C.adicionarCliente(c);
-       M.adicionarMotorista(m);
+        Motorista m = new Motorista(1, 111222333, 111222333, "Igor", "52930000");
+        Motorista m2 = new Motorista(2, 222333444, 444555666, "Adriano", "54630000");
+        Motorista m3 = new Motorista(3, 555666777, 777888999, "Douglas", "52490000");
         
-        System.out.println(M.listarMotorista());
+        Veiculo v = new Veiculo("ABC-123", 10);
+        Veiculo v2 = new Veiculo("DEF-456", 11);
+        
+        M.adicionarMotorista(m);
+        M.adicionarMotorista(m2);
+        M.adicionarMotorista(m3);
+        
+        Vei.adicionarVeiculo(v);
+        Vei.adicionarVeiculo(v2);
+        
+        
     }
 }

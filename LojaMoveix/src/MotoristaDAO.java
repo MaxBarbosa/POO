@@ -27,27 +27,6 @@ public class MotoristaDAO {
         }
     }
     
-    public void atualizarMotorista(Motorista m) {
-        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
-        PreparedStatement stmt = null;
-        Connection conexao = null;
-        try {
-            conexao = postgres.getConection();
-            stmt = conexao.prepareStatement("UPDATE Motorista SET CodMot=?, CPF=?, CNH=?, Nome=?, endereco=? WHERE CodMot=?");
-            stmt.setInt(1, m.getCodMot());
-            stmt.setLong(2, m.getCPF());
-            stmt.setLong(3, m.getCNH());
-            stmt.setString(4, m.getNome());
-            stmt.setString(5, m.getEndereco());
-
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            postgres.close(null, stmt, conexao);
-        }
-    }
-        
     public void removerMotorista(int codMot) {
         ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
         PreparedStatement stmt = null;
@@ -89,4 +68,50 @@ public class MotoristaDAO {
 
         return listaRetorno;
     }
+    
+    
+    public Motorista getMotoristaPeloCodigo(int CodMot) {
+        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try {
+            conexao = postgres.getConection();
+            stmt = conexao.prepareStatement("SELECT * FROM Motorista WHERE CODIGO=?");
+            stmt.setInt(1, CodMot);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                Motorista mot = new Motorista(rs.getInt("CodMot"), rs.getLong("CPF"), rs.getLong("CNH"), rs.getString("Nome"), rs.getString("Endereco"));
+                return mot;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            postgres.close(rs, stmt, conexao);
+        }
+        return null;
+    }
+    
+    
+    public void updateMotorista(Motorista m) {
+        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try {
+            conexao = postgres.getConection();
+            stmt = conexao.prepareStatement("UPDATE Motorista SET CPF=?, CNH=?, Nome=?, Endereco=? WHERE CodMot=?");
+            stmt.setInt(1, m.getCodMot());
+            stmt.setLong(2, m.getCPF());
+            stmt.setLong(3, m.getCNH());
+            stmt.setString(4, m.getNome());
+            stmt.setString(5, m.getEndereco());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            postgres.close(null, stmt, conexao);
+        }
+    }
 }
+

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Venda {
@@ -6,12 +7,12 @@ public class Venda {
     private int CodVdd, CodCli;
     private List<Item_venda> itens;
 
-    public Venda(int NumVen, double Valor_Total, int CodVdd, int CodCli, List<Item_venda> itens) {
+    public Venda(int NumVen, double Valor_Total, int CodVdd, int CodCli) {
         this.NumVen = NumVen;
         this.Valor_Total = Valor_Total;
         this.CodVdd = CodVdd;
         this.CodCli = CodCli;
-        this.itens = itens;
+        this.itens = new ArrayList<>();
     }
 
     public int getNumVen() {
