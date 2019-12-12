@@ -28,6 +28,27 @@ public class ProdutoDAO {
         }
     }
     
+    public void atualizarProduto(Produto p){
+        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try {
+            conexao = postgres.getConection();
+            stmt = conexao.prepareStatement("UPDATE Motorista SET codPro=?, Custo=?, Descricao=?, Preco=?, Nome=?) WHERE codPro=?");
+            stmt.setInt(1, p.getCodPro());
+            stmt.setDouble(2, p.getCusto());
+            stmt.setString(3, p.getDescricao());
+            stmt.setDouble(4, p.getPreco());
+            stmt.setString(5, p.getNome());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            postgres.close(null, stmt, conexao);
+        }
+    }    
+        
     public void removerProduto(int CodPro) {
         ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
         PreparedStatement stmt = null;

@@ -27,6 +27,27 @@ public class Item_vendaDAO {
             postgres.close(null, stmt, conexao);
         }
     }
+        
+    public void atualizarItem_venda(Item_venda i) {
+        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try {
+            conexao = postgres.getConection();
+            stmt = conexao.prepareStatement("UPDATE Item_venda SET CodPro=?, NumVen=?, vUnitario=?, Qtd=?) WHERE NumVen=?");
+            stmt.setInt(1, i.getCodPro());
+            stmt.setInt(2, i.getNumVen());
+            stmt.setDouble(3, i.getvUnitario());
+            stmt.setInt(4, i.getQtd());
+   
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            postgres.close(null, stmt, conexao);
+        }
+    }
     
     public void removerItem_venda(int CodPro) {
         ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();

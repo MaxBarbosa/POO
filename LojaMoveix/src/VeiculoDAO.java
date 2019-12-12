@@ -23,6 +23,24 @@ public class VeiculoDAO {
             postgres.close(null, stmt, conexao);
         }
     }
+        
+            public void atualizarVeiculo(Veiculo v) {
+        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try {
+            conexao = postgres.getConection();
+            stmt = conexao.prepareStatement("UPDATE Veiculo SET Placa=?, Placa=? WHERE Placa=?");
+            stmt.setString(1, v.getPlaca());
+            stmt.setInt(2, v.getCapacidade());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            postgres.close(null, stmt, conexao);
+        }
+    }
     
     public void removerVeiculo(String Placa) {
         ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();

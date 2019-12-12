@@ -28,6 +28,26 @@ public class VendedorDAO {
         }
     }
     
+    public void atualizarVendedor(Vendedor v) {
+        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try {
+            conexao = postgres.getConection();
+            stmt = conexao.prepareStatement("UPDATE Vendedor SET CodVdd=?, CPF=?, V_comissao=?, Nome=?, endereco=?");
+            stmt.setInt(1, v.getCodVdd());
+            stmt.setLong(2, v.getCPF());
+            stmt.setDouble(3, v.getV_comissao());
+            stmt.setString(4, v.getNome());
+            stmt.setString(5, v.getEndereco());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            postgres.close(null, stmt, conexao);
+        }
+    }    
     public void removerVendedor(int CodVdd) {
         ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
         PreparedStatement stmt = null;
@@ -69,4 +89,6 @@ public class VendedorDAO {
 
         return listaRetorno;
     }
+    
+    
 }

@@ -29,6 +29,28 @@ public class ClienteDAO {
         }
     }
     
+    public void atualizarCliente(Cliente c) {
+        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try {
+            conexao = postgres.getConection();
+            stmt = conexao.prepareStatement("UPDATE Cliente SET CodCli=?, Nome=?, Tel=?, Endereco=?, CPF=?, email=?) WHERE CodCli=?");
+            stmt.setInt(1, c.getCodCli());
+            stmt.setString(2, c.getNome());
+            stmt.setString(3, c.getTel());
+            stmt.setString(4, c.getEndereco());
+            stmt.setLong(5, c.getCPF());
+            stmt.setString(6, c.getEmail());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            postgres.close(null, stmt, conexao);
+        }
+    }    
+        
     public void removerCliente(int CodCli) {
         ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
         PreparedStatement stmt = null;
@@ -59,7 +81,12 @@ public class ClienteDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Cliente c = new Cliente(rs.getInt("CodCli"),rs.getString("Nome"),rs.getString("Tel"),rs.getString("Endereco"),rs.getLong("CPF"),rs.getString("Email"));
+                Cliente c = new Cliente(rs.getInt("CodCli"),
+                        rs.getString("Nome"),
+                        rs.getString("Tel"),
+                        rs.getString("Endereco"),
+                        rs.getLong("CPF"),
+                        rs.getString("Email"));
             }
 
         } catch (SQLException e) {
@@ -67,7 +94,7 @@ public class ClienteDAO {
         } finally {
             postgres.close(rs, stmt, conexao);
         }
-
         return listaRetorno;
     }
+    
 }

@@ -28,6 +28,27 @@ public class EntregaDAO {
             postgres.close(null, stmt, conexao);
         }
     }
+        
+    public void atualizarEntrega(Entrega en) {
+        ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
+        PreparedStatement stmt = null;
+        Connection conexao = null;
+        try {
+            conexao = postgres.getConection();
+            stmt = conexao.prepareStatement("UPDATE Entrega SET hora=?, dataE=?, NumVen=?, Placa=?, CodMot=? WHERE NumVen=?");
+            stmt.setString(1, en.getHora());
+            stmt.setDate(2, (Date) en.getDataE());
+            stmt.setInt(3, en.getNumVen());
+            stmt.setString(4, en.getPlaca());
+            stmt.setInt(5, en.getCodMot());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            postgres.close(null, stmt, conexao);
+        }
+    }
     
     public void removerEntrega(int NumVen) {
         ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
