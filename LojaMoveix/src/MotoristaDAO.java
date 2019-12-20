@@ -58,6 +58,7 @@ public class MotoristaDAO {
 
             while (rs.next()) {
                 Motorista m = new Motorista(rs.getInt("CodMot"),rs.getLong("CPF"),rs.getLong("CNH"),rs.getString("Nome"),rs.getString("endereco"));
+                listaRetorno.add(m);
             }
 
         } catch (SQLException e) {

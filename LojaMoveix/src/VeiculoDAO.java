@@ -55,6 +55,7 @@ public class VeiculoDAO {
 
             while (rs.next()) {
                 Veiculo v = new Veiculo(rs.getString("Placa"),rs.getInt("Capacidade"));
+                 listaRetorno.add(v);
             }
 
         } catch (SQLException e) {

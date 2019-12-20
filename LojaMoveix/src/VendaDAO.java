@@ -112,6 +112,7 @@ public class VendaDAO {
 
             while (rs.next()) {
                 Venda v = new Venda(rs.getInt("NumVen"),rs.getDouble("Valor_Total"), rs.getInt("CodVdd"), rs.getInt("CodCli"));
+                 listaRetorno.add(v);
                 
                 stmt = conexao.prepareStatement("SELECT * FROM Item_venda WHERE NumVen=?");
                 rsi = stmt.executeQuery();

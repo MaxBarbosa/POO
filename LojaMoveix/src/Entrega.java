@@ -1,13 +1,11 @@
-import java.util.Date;
-
 public class Entrega {
     private String hora;
-    private Date dataE;
+    private String dataE;
     private int NumVen;
     private String Placa;
     private int CodMot;
 
-    public Entrega(String hora, Date dataE, int NumVen, String Placa, int CodMot) {
+    public Entrega(String hora, String dataE, int NumVen, String Placa, int CodMot) {
         this.hora = hora;
         this.dataE = dataE;
         this.NumVen = NumVen;
@@ -23,11 +21,11 @@ public class Entrega {
         this.hora = hora;
     }
 
-    public Date getDataE() {
+    public String getDataE() {
         return dataE;
     }
 
-    public void setDataE(Date dataE) {
+    public void setDataE(String dataE) {
         this.dataE = dataE;
     }
 

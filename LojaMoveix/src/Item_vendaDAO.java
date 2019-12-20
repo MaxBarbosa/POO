@@ -59,6 +59,7 @@ public class Item_vendaDAO {
 
             while (rs.next()) {
                 Item_venda ii = new Item_venda(rs.getInt("CodPro"),rs.getInt("NumVen"),rs.getDouble("vUnitario"),rs.getInt("Qtd"));
+                 listaRetorno.add(ii);
             }
 
         } catch (SQLException e) {

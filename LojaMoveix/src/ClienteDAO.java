@@ -60,6 +60,7 @@ public class ClienteDAO {
 
             while (rs.next()) {
                 Cliente c = new Cliente(rs.getInt("CodCli"),rs.getString("Nome"),rs.getString("Tel"),rs.getString("Endereco"),rs.getLong("CPF"),rs.getString("Email"));
+                listaRetorno.add(c);
             }
 
         } catch (SQLException e) {

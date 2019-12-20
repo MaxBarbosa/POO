@@ -13,7 +13,7 @@ public class ProdutoDAO {
         Connection conexao = null;
         try {
             conexao = postgres.getConection();
-            stmt = conexao.prepareStatement("INSERT INTO Motorista(codPro, Custo, Descricao, Preco, Nome) VALUES(?,?,?,?,?)");
+            stmt = conexao.prepareStatement("INSERT INTO Produto(codPro, Custo, Descricao, Preco, Nome) VALUES(?,?,?,?,?)");
             stmt.setInt(1, p.getCodPro());
             stmt.setDouble(2, p.getCusto());
             stmt.setString(3, p.getDescricao());
@@ -45,8 +45,8 @@ public class ProdutoDAO {
         }
     }
     
-    public List<Motorista> listarProduto() {
-        List<Motorista> listaRetorno = new ArrayList<>();
+    public List<Produto> listarProduto() {
+        List<Produto> listaRetorno = new ArrayList<>();
 
         ConnectionPostgreSQL postgres = new ConnectionPostgreSQL();
         ResultSet rs = null;
@@ -59,6 +59,7 @@ public class ProdutoDAO {
 
             while (rs.next()) {
                 Produto p = new Produto(rs.getInt("CodPro"),rs.getDouble("Custo"),rs.getString("Descricao"),rs.getDouble("Preco"),rs.getString("Nome"));
+                 listaRetorno.add(p);
             }
 
         } catch (SQLException e) {

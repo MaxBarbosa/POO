@@ -59,6 +59,7 @@ public class VendedorDAO {
 
             while (rs.next()) {
                 Vendedor v = new Vendedor(rs.getInt("CodVdd"),rs.getLong("CPF"),rs.getDouble("V_comissao"),rs.getString("Nome"),rs.getString("endereco"));
+                 listaRetorno.add(v);
             }
 
         } catch (SQLException e) {

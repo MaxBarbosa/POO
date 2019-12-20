@@ -16,7 +16,8 @@ public class EntregaDAO {
             conexao = postgres.getConection();
             stmt = conexao.prepareStatement("INSERT INTO Entrega(hora, dataE, NumVen, Placa, CodMot) VALUES(?,?,?,?,?)");
             stmt.setString(1, en.getHora());
-            stmt.setDate(2, (Date) en.getDataE());
+            //stmt.setDate(2, (Date) en.getDataE());
+            stmt.setString(2, en.getDataE());
             stmt.setInt(3, en.getNumVen());
             stmt.setString(4, en.getPlaca());
             stmt.setInt(5, en.getCodMot());
@@ -59,7 +60,8 @@ public class EntregaDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Entrega en = new Entrega(rs.getString("hora"),rs.getDate("dataE"),rs.getInt("NumVen"),rs.getString("Placa"),rs.getInt("CodMot"));
+                Entrega en = new Entrega(rs.getString("hora"),rs.getString("dataE"),rs.getInt("NumVen"),rs.getString("Placa"),rs.getInt("CodMot"));
+                 listaRetorno.add(en);
             }
 
         } catch (SQLException e) {
@@ -82,7 +84,7 @@ public class EntregaDAO {
             stmt.setInt(1, NumVen);
             rs = stmt.executeQuery();
             if (rs.next()) {
-                Entrega NumVenda = new Entrega(rs.getString("Hora"), rs.getDate("DataE"), rs.getInt("NumVen"), rs.getString("Placa"), rs.getInt("CodMot"));
+                Entrega NumVenda = new Entrega(rs.getString("Hora"), rs.getString("DataE"), rs.getInt("NumVen"), rs.getString("Placa"), rs.getInt("CodMot"));
                 return NumVenda;
             }
         } catch (SQLException e) {
@@ -102,7 +104,7 @@ public class EntregaDAO {
             conexao = postgres.getConection();
             stmt = conexao.prepareStatement("UPDATE Entrega SET Hora=?, DataE=?, NumVen=?, Placa=?, CodMot=? WHERE NumVen=?");
             stmt.setString(1, ee.getHora());
-            stmt.setDate(2, (Date) ee.getDataE());
+            stmt.setString(2, ee.getDataE());
             stmt.setInt(3, ee.getNumVen());
             stmt.setString(4, ee.getPlaca());
             stmt.setInt(5, ee.getCodMot());
